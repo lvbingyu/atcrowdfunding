@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/atcrowdfunding.iml" filepath="$PROJECT_DIR$/.idea/atcrowdfunding.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bean/bean.iml" filepath="$PROJECT_DIR$/bean/bean.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/main/main.iml" filepath="$PROJECT_DIR$/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/managerapi/managerapi.iml" filepath="$PROJECT_DIR$/managerapi/managerapi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/managerimpl/managerimpl.iml" filepath="$PROJECT_DIR$/managerimpl/managerimpl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parent/parent.iml" filepath="$PROJECT_DIR$/parent/parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/potalapi/potalapi.iml" filepath="$PROJECT_DIR$/potalapi/potalapi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/potalimpl/potalimpl.iml" filepath="$PROJECT_DIR$/potalimpl/potalimpl.iml" />
+    </modules>
+  </component>
+</project>
