@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 启用注解功能 -->
+    <context:annotation-config />
+
+    <!-- 字符串字符编码转换-->
+    <!--<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" >
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>application/json;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>-->
+
+    <!--
+     use-default-filters="true" 事务不起作用.
+     	handler依赖于service,会首先从子容器中获取service(子容器的service对象方法是没有事务的.)
+     	如果子容器中存在,则利用子容器中提供的service对象;如果子容器中没有,才会从父容器中获取service(有事务的) ;
+      -->
+    <context:component-scan base-package="com.lv.*" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 异常解析器:统一异常处理 -->
+    <bean id="exceptionResolver"
+          class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <!-- <property name="exceptionAttribute" value="exception"/>  -->
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.Exception">error/error</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 文件上传解析器 -->
+    <!-- resolveLazily属性启用是为了推迟文件解析，以便在上传中捕获文件大小异常 -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+          p:defaultEncoding="UTF-8">
+        <property name="maxUploadSize" value="2097152"/>
+        <property name="resolveLazily" value="true"/>
+    </bean>
+
+    <mvc:interceptors>
+        <!--
+            ①声明拦截器对象
+            ②是拦截所有请求?
+                1.对JSP不拦截
+                2.对静态资源拦截.前提配置:<mvc:default-servlet-handler/>
+                3.对处理器方法拦截.
+                4.注意:preHandle方法返回true放行,否则后续流程无法执行.
+         -->
+        <bean id="loginInterceptor" class="com.lv.atcrowdfunding.interceptor.LoginInterceptor"></bean>
+        <bean id="authInterceptor" class="com.lv.atcrowdfunding.interceptor.AuthInterceptor"></bean>
+        <!-- <mvc:interceptor>
+            <mvc:mapping path="/*"/>
+            <mvc:exclude-mapping path="/index.htm"/>
+            <mvc:exclude-mapping path="/login.htm"/>
+            <mvc:exclude-mapping path="/reg.htm"/>
+            <bean id="loginInterceptor" class="com.atguigu.atcrowdfunding.interceptor.LoginInterceptor"></bean>
+        </mvc:interceptor> -->
+    </mvc:interceptors>
+
+</beans>
